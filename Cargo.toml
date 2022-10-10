@@ -1,0 +1,21 @@
+[package]
+name = "ex01"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy_static = "1.4"
+serde_json = "1.0"
+serde =  { version = "1.0", features = ["derive"] }
+hyper = { version = "0.14", features = ["http1", "http2", "client", "stream"] }
+native-tls = { version = "0.2", optional = true }
+hyper-tls = { version = "0.5", optional = true }
+hyper-rustls = { version = "0.22", optional = true, default-features = false }
+
+[features]
+default = ["native_tls"]
+native_tls = ["native-tls", "hyper-tls"]
+rustls = ["hyper-rustls", "hyper-rustls/native-tokio"]
+rustls_webpki = ["hyper-rustls", "hyper-rustls/webpki-tokio"]
