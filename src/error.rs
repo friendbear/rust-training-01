@@ -1,3 +1,15 @@
+use chrono;
+use hyper;
+#[cfg(feature = "native_tls")]
+use native_tls;
+use serde::{Deserialize, Serialize};
+use serde_json;
+use std::{self, fmt};
+use tokio;
+
+use crate::common::Headers;
+
+pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, Deserialize, Serialize, thiserror::Error)]
 pub struct TwitterErrors {
