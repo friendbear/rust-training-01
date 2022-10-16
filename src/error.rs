@@ -46,3 +46,19 @@ impl fmt::Display for TwitterErrorCode {
         write!(f, "#{}: {}", self.code, self.message)
     }
 }
+
+#[derive(Debug, Clone, PartialEq, Deserialize, thiserror::Error)]
+#[error("Media error {code} ({name}) - {message}")]
+pub struct MediaError {
+    pub code: i32,
+    pub name: String,
+    pub message: String,
+}
+
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+
+    #[error("URL given did not match API method")]
+    BadUrl,
+
+}
