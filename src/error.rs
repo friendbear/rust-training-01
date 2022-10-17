@@ -61,4 +61,18 @@ pub enum Error {
     #[error("URL given did not match API method")]
     BadUrl,
 
+    #[error("Invalid reponse recived: {} ({:?})", _0, _1)]
+    InvalidResponse(&'static str, Option<String>),
+
+    #[error("Value missing from response: {}", _0)]
+    MissingValue(&'static str),
+
+    #[error("Future has alredy completed")]
+    FutureAlredyCompleted,
+
+    #[error("Error return by Twitter: {_1}")]
+    TwitterError(Headers, TwitterError)
+
+    #[error("Rate limit reached, hold until {}", _0)]
+    RateLimit(i32)
 }
