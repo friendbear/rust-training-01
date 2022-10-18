@@ -75,4 +75,35 @@ pub enum Error {
 
     #[error("Rate limit reached, hold until {}", _0)]
     RateLimit(i32)
+
+    #[error("Error processing media: {}", _0)]
+    MediaError(#[from] MediaError),
+
+    #[error("Error status received: {}", _0)]
+    BadStatus(hyper::StatusCode),
+
+    #[error("Network error: {}", _0)]
+    NetError(#[from] hyper::Error),
+
+    #[cfg(feature = "native_tls")]
+    #[error("TLS error: {}", _0)]
+    TlsError(#[from] native_tls::Error),
+
+    #[error("IO error: {}", _0)]
+    IOError(#[from] std::io::Error),
+
+    #[error("JSON deserialize error: {}", _0)]
+    DeserializeError(#[from] serde_json::Error),
+
+    #[error("Error parsing timestamp: {}", _0)]
+    TimestampParseError(#[from] chrono::ParseError),
+
+    #[error("Timer runtime shutdown: {}", _0)]
+    TimerShutdownError(#[from] tokio::time::error::Error),
+
+    #[error("Error decoding headers: {}", _0)]
+    HeaderParseError(#[from] hyper::header::ToStrError),
+
+    #[error("Error converting headers: {}" _0)]
+    HeaderComvertError(#[from] std::num::ParseIntError),
 }
